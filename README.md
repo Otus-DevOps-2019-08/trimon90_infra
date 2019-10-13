@@ -53,7 +53,7 @@ gcloud compute instances create reddit-app\
   --machine-type=g1-small \
   --tags puma-server \
   --restart-on-failure \
-  ----metadata-from-file startup_script=./startup_script.sh
+  --metadata-from-file startup_script=./startup_script.sh
 
 Для создания нужного правила фаервола выполнить:
 
