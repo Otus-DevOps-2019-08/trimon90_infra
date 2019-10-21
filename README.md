@@ -28,3 +28,34 @@ Host someinternalhost
 ```
 
 Далее был настроен vpn сервер - pritunl. Создана организация otus и сервер otus c пользователем test. Настроен сертификт Let's encrypt.
+
+
+# HW 5 Основные сервисы google cloud platform
+
+```
+testapp_IP = 34.89.132.2
+testapp_port = 9292
+
+```
+
+Была произведена настройка gcloud sdk. С помощью него создана виртуалка для приложения - reddit-app. На ней вручную были подняты ruby, mongodb; произведен деплой приложения reddit-app. Для того чтобы не производить действия руками были написаны скрипты:
+
+ - install_ruby.sh
+ - install_mongodb.sh
+ - deploy.sh
+
+Для автоматической установки и деплоя создан скрипт startup_script.sh, чтоб он запускался после создания виртуалки, нужно выполнять комманду в таком виде:
+
+gcloud compute instances create reddit-app\
+  --boot-disk-size=10GB \
+  --image-family ubuntu-1604-lts \
+  --image-project=ubuntu-os-cloud \
+  --machine-type=g1-small \
+  --tags puma-server \
+  --restart-on-failure \
+  --metadata-from-file startup_script=./startup_script.sh
+
+Для создания нужного правила фаервола выполнить:
+
+gcloud compute firewall-rules create default-puma-server --allow tcp:9292 --direction INGRESS
+ 
