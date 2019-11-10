@@ -1,0 +1,12 @@
+{
+
+	"gcp_project_id": "some_project_id",
+	"gcp_source_image_family": "ubuntu-1604-lts",
+	"gcp_disk_size": "777", 
+	"gcp_disk_type": "some type",
+	"gcp_machine_type": "f1-micro",
+	"gcp_network": "some network",
+	"gcp_tags": "",
+	"gcp_image_description": "some descr"
+
+}
