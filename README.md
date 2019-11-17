@@ -58,4 +58,12 @@ gcloud compute instances create reddit-app\
 Для создания нужного правила фаервола выполнить:
 
 gcloud compute firewall-rules create default-puma-server --allow tcp:9292 --direction INGRESS
- 
+
+
+# HW 6 Сборка образа VM при помощи Packer
+
+Была произведена настройка packer. Создан json базового образа (reddit-base) - ubuntu16.json и образ с приложением (reddit-full) на его основе - immutable.json.
+
+Был написан скрипт - startup_script.sh для деплоя приложения и создания системд юнита для него в образе.
+
+Был написан скрипт create-reddit-vm.sh для создания VM из образа reddit-full.
