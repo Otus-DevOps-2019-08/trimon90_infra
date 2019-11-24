@@ -26,7 +26,7 @@ variable "users_ssh_keys" {
   description = "List for users ssh"
   type = list(object({
     user = string
-    key = string
+    key  = string
   }))
 }
 

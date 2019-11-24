@@ -14,7 +14,7 @@ provider "google" {
 }
 
 resource "google_compute_project_metadata_item" "ssh-keys" {
-  key = "ssh-keys"
+  key   = "ssh-keys"
   value = join("\n", [for item in var.users_ssh_keys : "${item.user}:${file(item.key)}"])
 }
 
