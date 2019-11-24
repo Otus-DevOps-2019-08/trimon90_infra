@@ -1,0 +1,4 @@
+project              = "devops-course-1"
+public_key_path      = "path/to/ssh/key.pub"
+disk_image           = "put_image_name_here"
+provisioner_key_path = "path/to/ssh/key.pub"
