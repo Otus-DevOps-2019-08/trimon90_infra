@@ -67,3 +67,83 @@ gcloud compute firewall-rules create default-puma-server --allow tcp:9292 --dire
 Был написан скрипт - startup_script.sh для деплоя приложения и создания системд юнита для него в образе.
 
 Был написан скрипт create-reddit-vm.sh для создания VM из образа reddit-full.
+
+# HW 7 Terraform
+
+Была произведена работа по домашней работе 7, были написаны манифесты terraform для разворачмвания инфраструктуры для reddit-app.
+
+Доп. задание 1:
+
+- Добавление SSH-ключей к проекту.
+
+Добавим input переменную для хранения логинов и публичных ключей в `variables.tf`:
+```
+variable "users_ssh_keys" {
+  description = "List for users ssh"
+  type = list(object({
+    user = string
+    key = string
+  }))
+}
+```
+
+Добавим пользователей с одинаковыми ключами в `terraform.tfvars`:
+```
+users_ssh_keys = [
+  {
+    user = "appuser"
+    key = "путь_до_ключа"
+  },
+  {
+    user = "appuser1"
+    key = "путь до ключа"
+  }
+]
+```
+
+Добавим ресурс `google_compute_project_metadata_item` в `main.tf`, который будет добавлять пары `логин:ключ` в matadata проекта:
+```
+resource "google_compute_project_metadata_item" "ssh-keys" {
+  key = "ssh-keys"
+  value = join("\n", [for item in var.users_ssh_keys : "${item.user}:${file(item.key)}"])
+}
+```
+
+Результат из terraform plan:
+ 
+value   = <<~EOT
+
+            appuser:ssh-rsa здесь_был_публичный_ключ_удален_в_целях_безопасноти appuser
+            
+            appuser1:ssh-rsa здесь_был_публичный_ключ_удален_в_целях_безопасноти appuser
+            
+
+Доп. задание 1.5:
+
+
+Добавим юзера в веб интерфейсе, получим:
+
+
+            appuser_web:ssh-rsa здесь_был_публичный_ключ_удален_в_целях_безопасноти appuser
+        EOT
+
+
+При выполнении `terraform apply` пользовательские SSH-ключи, добавленные через web-интерфейс, удаляются.
+
+Доп. задание 2:
+
+Добавим переменную `node_count` для указания количества создаваемых VM:
+
+
+```
+ resource "google_compute_instance" "app" {
+-  name         = "reddit-app"
++  count        = var.node_count
++  name         = "reddit-app-${count.index}"
+   machine_type = "g1-small"
+   zone         = var.zone
+```
+
+Добавляем код для балансировщика в lb.tf
+
+
