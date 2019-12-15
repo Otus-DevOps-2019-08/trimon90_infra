@@ -5,7 +5,7 @@ provider "google" {
 }
 module "storage-bucket" {
   source  = "SweetOps/storage-bucket/google"
-  version = "0.1.1"
+  version = "0.3.0"
   # Имена поменяйте на другие
   name = ["storage-bucket-otus-trimon90", "storage-bucket-otus-trimon99"]
 }
