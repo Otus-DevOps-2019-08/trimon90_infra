@@ -1,0 +1,19 @@
+project              = "devops-course-1"
+public_key_path      = "~/.somedir/somekey.pub"
+disk_image           = "reddit-base"
+provisioner_key_path = "~/.somedir/somekey.pub"
+users_ssh_keys = [
+  {
+    user = "appuser"
+    key = "~/.somedir/somekey.pub"
+  },
+  {
+    user = "appuser1"
+    key = "~/.somedir/somekey.pub"
+  },
+  {
+    user = "appuser_web"
+    key = "~/.somedir/somekey.pub"
+  }
+]
+
